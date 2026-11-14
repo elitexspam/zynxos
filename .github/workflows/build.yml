@@ -3,6 +3,9 @@ name: Build Zynx ISO
 on:
   workflow_dispatch:
     inputs:
+      desktop:
+        description: "Desktop: plasma (KDE) ou zynxwm (leve)"
+        default: plasma
       browser:
         description: "Navegador: firefox, netsurf ou none"
         default: firefox
@@ -30,7 +33,8 @@ jobs:
         working-directory: ${{ env.SRC }}
         env:
           BROWSER: ${{ inputs.browser }}
-        run: sudo make BROWSER="${BROWSER:-firefox}"
+          DESKTOP: ${{ inputs.desktop }}
+        run: sudo make BROWSER="${BROWSER:-firefox}" DESKTOP="${DESKTOP:-plasma}"
 
       - uses: actions/upload-artifact@v4
         with:
